@@ -1,0 +1,81 @@
+plugins {
+	id 'java'
+	id 'war'
+	id 'org.springframework.boot' version '3.5.5'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'org.handy'
+version = '0.0.1-SNAPSHOT'
+description = 'HandyReact'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+def frontendDir = "$projectDir/frontend"
+
+task checkFrontend() {
+	doLast {
+		def packageJsonFile = file("$frontendDir/package.json")
+		if (!packageJsonFile.exists()) {
+			logger.warn("Frontend package.json not found. Skipping frontend build.")
+			throw new StopExecutionException("Frontend not initialized")
+		}
+	}
+}
+
+task npmInstall(type: Exec) {
+	workingDir frontendDir
+	inputs.file("$frontendDir/package.json")
+	outputs.dir("$frontendDir/node_modules")
+	commandLine 'npm.cmd', 'install'
+	onlyIf { file("$frontendDir/package.json").exists() }
+}
+
+task npmBuild(type: Exec) {
+	dependsOn checkFrontend, npmInstall
+	workingDir frontendDir
+	commandLine 'npm.cmd', 'run', 'build'
+	onlyIf { file("$frontendDir/package.json").exists() }
+}
+
+task copyBuild(type: Copy) {
+	dependsOn npmBuild
+	from("$frontendDir/build")
+	into("$projectDir/src/main/resources/static")
+	onlyIf { file("$frontendDir/build").exists() }
+}
+
+processResources {
+	try {
+		dependsOn copyBuild
+	} catch (Exception e) {
+		logger.warn("Frontend build skipped: ${e.message}")
+	}
+}
