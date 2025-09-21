@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+.intro-line1 {
+  width: 95%;
+  margin: auto;
+}
+
 .info-container {
   display: flex;
   width: 100%; /* 컨테이너가 전체 너비를 차지하도록 설정 */
@@ -10,16 +15,18 @@
 .info1 {
   flex: 1; /* 너비를 1:1 비율로 나눔 */
   padding: 20px; /* 보기 좋게 안쪽 여백 추가 */
+  border-right: 1px solid #ccc; /* 오른쪽 테두리를 추가하여 세로선 생성 */
+  padding-right: 20px; /* 오른쪽 여백 추가 */
 }
 
 .short-intro {
   flex: 2; /* 너비를 1:1 비율로 나눔 */
   padding: 20px; /* 보기 좋게 안쪽 여백 추가 */
+  padding-left: 20px; /* 왼쪽 여백 추가 */
 }
 
 .skills {
   flex: 1;
-  padding: 20px; /* 보기 좋게 안쪽 여백 추가 */
 
 }
 
