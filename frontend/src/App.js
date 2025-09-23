@@ -2,6 +2,20 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const startDate = new Date(2022, 11); // 2022년 12월
+  const today = new Date();
+  let years = (today.getFullYear() - startDate.getFullYear());
+  let months = today.getMonth() - startDate.getMonth();
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  const nowDuration = `${years}년 ${months}개월`;
+  years += 2;
+  months += 1;
+  const totalDuration = `${years}년 ${months}개월`;
+
   return (
     <>
       <div className="App">
@@ -64,6 +78,14 @@ function App() {
                 </ul>
             </div>
         </div>
+      {/*  경력  */}
+      </div>
+      <div className="history">
+        <h2>{`경력(총 경력 ${totalDuration})`}</h2>
+        <hr className="intro-line1"/>
+          <h3>{`푸드나무(2022.12 ~ 현재, ${nowDuration})`}</h3>
+
+          <h3>아이엠디글로벌스(2020.10 ~ 2022.11, 2년 1개월</h3>
       </div>
     </>
   );
