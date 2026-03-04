@@ -1,5 +1,5 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from '../logo.svg';
+import '../App.css';
 
 function App() {
   const startDate = new Date(2022, 11); // 2022년 12월
