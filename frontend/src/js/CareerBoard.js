@@ -59,8 +59,7 @@ export default function CareerBoard() {
 
     return (
         <>
-            <h2>경력</h2>
-            <div style={{ marginTop: '30px', padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '10px' }}>
+            <div style={{ width: '100%',marginTop: '30px', padding: '20px', borderRadius: '10px' }}>
                 <Swiper
                     modules={[Navigation, Pagination]} // 여기서 모듈을 주입해야 합니다.
                     spaceBetween={20}
