@@ -8,20 +8,26 @@ export default function CareerContainer() {
             <h2>경력</h2>
             <div style={{
                 display: 'flex',
-                flexWrap: 'wrap',    // 화면이 좁아지면 아래로 떨어지게 설정 (반응형)
-                gap: '20px',         // 컴포넌트 사이의 간격
-                padding: '20px',
-                alignItems: 'flex-start' // 높이가 달라도 상단 기준으로 정렬
+                flexWrap: 'wrap',
+                gap: '30px',          // 컴포넌트 사이 간격을 조금 더 넉넉히
+                padding: '40px 20px', // 상하 패딩 추가
+                minHeight: '80vh',    // 화면 전체 높이의 80% 정도를 확보해서 중앙 정렬 효과 극대화
+                alignItems: 'center', // 🔥 핵심: 자식 요소들을 세로축 기준으로 중앙 정렬
+                justifyContent: 'center' // 가로축 기준으로도 중앙 정렬
             }}>
                 <div style={{
-                    flex: '1 1 calc(50% - 20px)',
-                    minWidth: '350px'
+                    flex: '1 1 400px',
+                    maxWidth: '700px',
+                    display: 'flex',     // 차트 내부도 중앙 정렬하고 싶을 때 추가
+                    justifyContent: 'center',
+                    alignItems: 'center'
                 }}>
                     <CareerChart />
                 </div>
+
                 <div style={{
-                    flex: '1 1 calc(50% - 20px)',
-                    minWidth: '350px'  // 너무 작아지지 않게 방어선 구축
+                    flex: '1 1 400px',  // 너비가 부족하면 400px 기준 아래로 떨어짐
+                    maxWidth: '600px'   // 너무 퍼지지 않게 제한
                 }}>
                     <CareerBoard />
                 </div>
