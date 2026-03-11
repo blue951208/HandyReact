@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
     Chart as ChartJS,
     LinearScale,
@@ -15,28 +16,58 @@ export default function CareerBubbleChart() {
     const startYear = 1995;
     const currentYear = new Date().getFullYear();
 
-    const data = {
-        datasets: [
-            {
-                label: '두원공과대학(안성)',
-                data: [
-                    // x: 연도, y: 임의의 높이(정렬용), r: 기간(크기)
-                    { x: 2015.03, y: 1, r: 24, desc: '두원공과대학(안성)' }
-                ],
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                borderColor: 'rgb(54, 162, 235)',
-            },
-            {
-                label: '군대',
-                data: [
-                    // x: 연도, y: 임의의 높이(정렬용), r: 기간(크기)
-                    { x: 2016.11, y: 2, r: 20, desc: '군대' },
-                ],
-                backgroundColor: 'rgba(25, 89, 18, 1)',
-                borderColor: 'rgb(37,95,37)',
-            },
-        ],
-    };
+    const [chartData, setChartData] = useState({ datasets: [] });
+
+    useEffect(() => {
+        if (chartData.datasets.length > 0) {
+            console.log("✅ chartData 세팅 완료:", chartData);
+            return;
+        }
+
+        axios.get('http://localhost:8080/api/career-info/list')
+            .then(response => {
+                const careerData = response.data;
+                // 1. 색상 팔레트 정의 (회사/항목별로 다르게 부여)
+                const colors = [
+                    'rgba(54, 162, 235, 0.5)',   // 블루
+                    'rgba(25, 89, 18, 0.5)',    // 군대(그린)
+                    'rgba(255, 159, 64, 0.5)',   // 오렌지
+                    'rgba(153, 102, 255, 0.5)',  // 퍼플
+                    'rgba(255, 99, 132, 0.5)',   // 핑크
+                    'rgba(75, 192, 192, 0.5)',   // 민트
+                    'rgba(255, 205, 86, 0.5)'    // 옐로우
+                ];
+
+                const formattedDatasets = careerData.map((item, index) => {
+                    const radius = item.totalMonths === 0 ? 5 : item.totalMonths;
+                    const [year, month] = item.dstartDtm.split('-').map(Number);
+                    const xValue = year + (month - 1) / 12;
+                    const periodValue = item.dendDtm
+                        ? `${item.dstartDtm} ~ ${item.dendDtm}`
+                        : `${item.dstartDtm}`;
+                    return {
+                        label: item.vcareerNm,
+                        data: [{
+                            x: xValue,
+                            y: index + 1 , // 버블이 겹치지 않게 1, 2, 3 층으로 분산
+                            r: radius,
+                            desc: item.vcareerNm,
+                            period: periodValue
+                        }],
+                        backgroundColor: colors[index % colors.length],
+                        borderColor: colors[index % colors.length].replace('0.5', '1'),
+                        borderWidth: 1
+                    };
+                });
+
+                console.log('formattedDatasets : ',formattedDatasets);
+                setChartData({ datasets: formattedDatasets });
+                console.log('chartData : ',chartData);
+            })
+
+    }, [chartData])
+
+    const data = chartData;
 
     const options = {
         scales: {
@@ -61,6 +92,7 @@ export default function CareerBubbleChart() {
                 callbacks: {
                     // 1. 툴팁 제목: 회사명
                     title: (context) => {
+                        console.log('context : ',context);
                         const item = context[0].raw;
                         return `🏢 ${item.desc}`;
                     },
@@ -68,8 +100,7 @@ export default function CareerBubbleChart() {
                     label: (context) => {
                         const item = context.raw;
                         return [
-                            `🚀 서비스: ${item.desc}`,
-                            `📝 주요업무: ${item.desc}`
+                            `기간: ${item.period}`
                         ];
                     }
                 },
@@ -89,7 +120,13 @@ export default function CareerBubbleChart() {
 
     return (
         <div style={{ height: '400px', width: '100%' }}>
-            <Bubble data={data} options={options} />
+            {chartData && Array.isArray(chartData.datasets) && chartData.datasets.length > 0 ? (
+                <Bubble data={data} options={options} />
+            ) : (
+                <div className="loading-box">
+                    <p>데이터를 불러오는 중이거나 코드를 수정 중입니다...</p>
+                </div>
+            )}
         </div>
     );
 }

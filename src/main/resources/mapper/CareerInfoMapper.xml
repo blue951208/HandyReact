@@ -3,4 +3,14 @@
 
 <mapper namespace="org.handy.handyreact.mapper.CareerInfoMapper">
 
+    <select id="selectCareerInfoList" parameterType="map" resultType="org.handy.handyreact.dto.CareerInfoDto">
+        select ci.v_career_id
+             , ci.v_career_nm
+             , to_char(ci.d_start_dtm, 'YYYY-MM') as d_start_dtm
+             , to_char(ci.d_end_dtm, 'YYYY-MM') as d_end_dtm
+             , (EXTRACT(year FROM AGE(d_end_dtm, d_start_dtm)) * 12 +
+                EXTRACT(month FROM AGE(d_end_dtm, d_start_dtm))) AS total_months
+          from career_info ci
+         order by ci.d_start_dtm
+    </select>
 </mapper>
