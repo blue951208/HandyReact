@@ -15,7 +15,7 @@ COPY --from=frontend-build /frontend/build /app/src/main/resources/static
 RUN ./gradlew clean bootWar -x test
 
 # 3단계: 최종 실행 이미지
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=backend-build /app/build/libs/*.war app.war
 EXPOSE 8080
