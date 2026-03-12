@@ -60,9 +60,9 @@ export default function CareerBubbleChart() {
                     };
                 });
 
-                console.log('formattedDatasets : ',formattedDatasets);
+                // console.log('formattedDatasets : ',formattedDatasets);
                 setChartData({ datasets: formattedDatasets });
-                console.log('chartData : ',chartData);
+                // console.log('chartData : ',chartData);
             })
 
     }, [chartData])
@@ -92,7 +92,7 @@ export default function CareerBubbleChart() {
                 callbacks: {
                     // 1. 툴팁 제목: 회사명
                     title: (context) => {
-                        console.log('context : ',context);
+                        // console.log('context : ',context);
                         const item = context[0].raw;
                         return `🏢 ${item.desc}`;
                     },
