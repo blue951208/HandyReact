@@ -24,7 +24,9 @@ export default function CareerBubbleChart() {
             return;
         }
 
-        axios.get('http://localhost:8080/api/career-info/list')
+        const API_BASE_URL = process.env.REACT_APP_API_URL;
+
+        axios.get(`${API_BASE_URL}/api/career-info/list`)
             .then(response => {
                 const careerData = response.data;
                 // 1. 색상 팔레트 정의 (회사/항목별로 다르게 부여)
