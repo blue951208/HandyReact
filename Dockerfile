@@ -12,6 +12,9 @@ WORKDIR /app
 COPY . .
 # 위에서 빌드한 리액트 파일을 스프링 정적 폴더로 복사
 COPY --from=frontend-build /frontend/build /app/src/main/resources/static
+# 실행 권한 부여
+RUN chmod +x ./gradlew
+
 RUN ./gradlew clean bootWar -x test
 
 # 3단계: 최종 실행 이미지
