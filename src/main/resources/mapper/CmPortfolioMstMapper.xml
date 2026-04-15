@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.handy.handyreact.mapper.CmPortfolioMstMapper">
+
+    <select id="selectCmPortfolioMstList" parameterType="map" resultType="org.handy.handyreact.dto.CmPortfolioMstDto">
+        select *
+          from CM_PORTFOLIO_MST
+         where v_flag_del = 'N'
+           and v_show_yn = 'Y'
+    </select>
+</mapper>

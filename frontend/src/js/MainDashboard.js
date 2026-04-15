@@ -1,7 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import axios from "axios";
 
 function MainDashboard() {
     const [message, setMessage] = React.useState("5년차 개발자 손동현입니다.");
+
+    useEffect(() => {
+        const API_BASE_URL = process.env.REACT_APP_API_URL;
+
+        axios.get(`${API_BASE_URL}/api/portfolio/data`)
+            .then(response => {
+                console.log('chk : '+response.data);
+            });
+    }, []);
 
     return (
         <>
