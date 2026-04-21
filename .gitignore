@@ -38,3 +38,6 @@ out/
 
 ## application properties
 src/main/resources/application-prod.properties
+
+src/main/resources/static/static/
+src/main/resources/static/asset-manifest.json
