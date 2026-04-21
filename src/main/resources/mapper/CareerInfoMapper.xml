@@ -11,6 +11,20 @@
              , (EXTRACT(year FROM AGE(d_end_dtm, d_start_dtm)) * 12 +
                 EXTRACT(month FROM AGE(d_end_dtm, d_start_dtm))) AS total_months
           from career_info ci
+         where v_flag_del = 'N'
          order by ci.d_start_dtm
+    </select>
+
+    <select id="selectCareerSlideList" resultType="org.handy.handyreact.dto.CareerSlideDto">
+        select cd.v_detail_id
+             , cd.v_detail_nm
+             , cd.v_career_id
+             , (select string_agg(cdd.v_cont, '|' order by cdd.n_sort)
+                  from career_detail_desc cdd
+                 where cdd.v_flag_del = 'N'
+                   and cdd.v_detail_id = cd.v_detail_id) as v_cont
+          from career_detail cd
+         where v_flag_del = 'N'
+         order by cd.v_career_id desc, cd.n_sort
     </select>
 </mapper>
