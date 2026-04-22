@@ -53,7 +53,8 @@ public class CareerInfoServiceImpl implements CareerInfoService {
                     serviceItem.put("name", careerSlide.getVDetailNm());
 
                     List<Map<String,Object>> workList = new ArrayList<>();
-                    String[] works = careerSlide.getVCont().split("|");
+                    // | 을 구분자로 배열 저장
+                    String[] works = careerSlide.getVCont().split("\\|");
                     for (String work : works) {
                         Map<String,Object> workItem = new HashMap<>();
                         workItem.put("work", work);
