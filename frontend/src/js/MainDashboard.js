@@ -47,7 +47,7 @@ function MainDashboard() {
                     <h4 style={{ color: '#0056b3', borderBottom: '1px solid #0056b3', display: 'inline-block', marginBottom: '10px' }}>스킬</h4>
                     <ul style={{ listStyle: 'disc', paddingLeft: '20px', lineHeight: '2' }}>
                         {portfolioData.skill.map((item, index) => (
-                          <li><strong>{item?.title + ' : '}</strong>{item?.content}</li>
+                          <li key={index}><strong>{item?.title + ' : '}</strong>{item?.content}</li>
                         ))}
                     </ul>
                 </div>
