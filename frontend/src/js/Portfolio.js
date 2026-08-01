@@ -1,15 +1,15 @@
 ﻿'use client';
 
-import MainDashboard from "./MainDashboard";
-import CareerContainer from "./CareerContainer";
+import MainDashboard from './MainDashboard';
+import CareerContainer from './CareerContainer';
 
-function Protfolio() {
-    return (
-        <>
-            <MainDashboard />
-            <CareerContainer/>
-        </>
-    );
+function Portfolio() {
+  return (
+    <main className="portfolio-page">
+      <MainDashboard />
+      <CareerContainer />
+    </main>
+  );
 }
 
-export default Protfolio;
+export default Portfolio;
