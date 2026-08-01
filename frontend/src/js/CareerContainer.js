@@ -1,3 +1,5 @@
+﻿'use client';
+
 import CareerBoard from './CareerBoard';
 import CareerChart from './CareerChart';
 import React from "react"; // 아까 만든 TimelineExample을 이 이름으로 쓰신다고 가정

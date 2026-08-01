@@ -1,3 +1,5 @@
+﻿'use client';
+
 import MainDashboard from "./MainDashboard";
 import CareerContainer from "./CareerContainer";
 

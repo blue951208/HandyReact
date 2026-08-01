@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
@@ -24,7 +26,7 @@ export default function CareerBubbleChart() {
             return;
         }
 
-        const API_BASE_URL = process.env.REACT_APP_API_URL;
+        const API_BASE_URL = (process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_API_URL);
 
         axios.get(`${API_BASE_URL}/api/career-info/list`)
             .then(response => {

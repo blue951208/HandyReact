@@ -1,16 +1,15 @@
+﻿'use client';
+
 import React, {useEffect} from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import axios from "axios";
 
 export default function CareerBoard() {
     // const swiperRef = useRef(null);
 
-    const API_BASE_URL = process.env.REACT_APP_API_URL;
+    const API_BASE_URL = (process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_API_URL);
     const [careers, setCareers] = React.useState([]);
 
     useEffect(()=> {
@@ -20,52 +19,6 @@ export default function CareerBoard() {
             });
     },[]);
 
-    // const careers = [
-    //     {
-    //         company: "푸드나무", startdt: "2022.12", enddt: "2025.12", services: [
-    //             {
-    //                 name: "랭킹닭컴", jobs: [
-    //                     { work: "랭킹닭컴 유지보수 및 기능 개발" }
-    //                     , { work: "메인 전시 영역별 전시 관리 시스템 구축" }
-    //                     , { work: "월간 이벤트 작업 및 시스템 개선" }
-    //                     , { work: "랭킹 피트니스 작업" }
-    //                     , { work: "랭닭 키우기 게임 작업(Phaser.js 사용)" }
-    //                     , { work: "jsp, jQuery, Java, Spring 사용" }
-    //                 ]
-    //             }
-    //         ]
-    //     },
-    //     {
-    //         company: "아이엠디글로벌스", startdt: "2020.10", enddt: "2022.11", services: [
-    //             {
-    //                 name: "나의 변호사", jobs: [
-    //                     {work: "본인인증(kcb 본인인증) 모듈 연결"},
-    //                     {work: "React, PostgreSQL, Java 사용"}
-    //                 ]
-    //             },
-    //             {
-    //                 name: "중앙모자의료센터", jobs: [
-    //                     {work: "관리자, 사용자 화면 리뉴얼"},
-    //                     {work: "jsp, jQuery, Java, Oracle DB 사용"}
-    //                 ]
-    //             },
-    //             {
-    //                 name: "마음엔아트", jobs: [
-    //                     {work: "asp 코드를 jsp, Java로 리뉴얼 작업"},
-    //                     {work: "jsp, jQuery, Java, MariaDB 사용"}
-    //                 ]
-    //             },
-    //             {
-    //                 name: "아트앤하트", jobs: [
-    //                     {work: "유지보수 및 기능 개발"},
-    //                     {work: "망고페이 PG 연동"},
-    //                     {work: "관리자 일부 화면 Vue.js 전환 작업"},
-    //                     {work: "jsp, Java, MariaDB 사용"}
-    //                 ]
-    //             }
-    //         ]
-    //     },
-    // ];
 
     return (
         <>
